@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   enum status: { admin: 0, user: 1, banned: 2 }
 
+  has_many :access_tokens
+
   validates :username,
     presence: true,
     uniqueness: { case_sensitive: false },
@@ -13,11 +15,16 @@ class User < ApplicationRecord
   validates :shoe_size, presence: true
 
   before_create :assign_user_status
+  before_create :assign_access_token
 
   private
 
   def assign_user_status
     self.status = :user
+  end
+
+  def assign_access_token
+    access_tokens.build(kind: "web")
   end
 
   def immutable_fields_unchanged

@@ -42,6 +42,10 @@ RSpec.describe User, type: :model do
       expect { create(:user, shoe_size: "") }.
         to raise_error ActiveRecord::RecordInvalid
     end
+
+    it "assigns a web access token" do
+      expect(create(:user).access_tokens.where(kind: "web").count).to eq(1)
+    end
   end
 
   describe "#save" do
