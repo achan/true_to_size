@@ -4,7 +4,8 @@ class CreateShoes < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :brand
       t.string :model
-      t.integer :type
+      t.integer :size_class
+      t.string :slug, unique: true
 
       t.timestamps
     end

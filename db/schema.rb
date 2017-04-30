@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170429023607) do
+ActiveRecord::Schema.define(version: 20170429135954) do
 
   create_table "access_tokens", force: :cascade do |t|
     t.integer "user_id"
@@ -21,11 +21,24 @@ ActiveRecord::Schema.define(version: 20170429023607) do
     t.index ["user_id"], name: "index_access_tokens_on_user_id"
   end
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
   create_table "shoes", force: :cascade do |t|
     t.string "name"
     t.string "brand"
     t.string "model"
-    t.integer "type"
+    t.integer "size_class"
+    t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

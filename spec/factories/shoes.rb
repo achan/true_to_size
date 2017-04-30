@@ -3,6 +3,6 @@ FactoryGirl.define do
     name { Faker::Pokemon.name }
     brand { Faker::Company.name }
     model { Faker::Vehicle.vin }
-    type :men
+    size_class :men
   end
 end

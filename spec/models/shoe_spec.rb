@@ -14,18 +14,28 @@ RSpec.describe Shoe, type: :model do
       expect(build(:shoe, model: "")).not_to be_valid
     end
 
-    it "requires a type" do
-      expect(build(:shoe, type: "")).not_to be_valid
+    it "requires a size class" do
+      expect(build(:shoe, size_class: "")).not_to be_valid
     end
 
     it "requires a brand" do
       expect(build(:shoe, brand: "")).not_to be_valid
     end
 
-    it "only accepts :men or :women types" do
-      expect { build(:shoe, type: :aliens) }.to raise_error ArgumentError
-      expect(build(:shoe, type: :men)).to be_valid
-      expect(build(:shoe, type: :women)).to be_valid
+    it "only accepts :men or :women size classes" do
+      expect { build(:shoe, size_class: :aliens) }.to raise_error ArgumentError
+      expect(build(:shoe, size_class: :men)).to be_valid
+      expect(build(:shoe, size_class: :women)).to be_valid
+    end
+  end
+
+  describe "#slug" do
+    let!(:shoe) { create(:shoe, name: "my unique shoe") }
+
+    context "with a unique shoe name" do
+      it "slugifies the name" do
+        expect(shoe.slug).to eq "my-unique-shoe"
+      end
     end
   end
 end
